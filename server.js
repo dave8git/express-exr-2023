@@ -12,8 +12,8 @@ app.use((req, res, next)=> {
     next();
 });
 
-app.use('/admin', (req, res, next) => {
-    res.send('Tutaj tylko admini!');
+app.use('/user', (req, res, next) => {
+    res.send('Tutaj tylko userzy zalogowani!');
     next();
 });
 
