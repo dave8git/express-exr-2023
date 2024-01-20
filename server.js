@@ -1,7 +1,10 @@
 const express = require('express');
 const path = require('path');
+const hbs = require('express-handlebars');
 
 const app = express();
+app.engine('.hbs', hbs()); // mówi jaki engine ma wykorzystać, tutaj hbs
+app.set('view engine', '.hbs'); // mówi expresowi, że dostanie pliki .hbs i ma je kompilować z całością
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -22,11 +25,31 @@ app.get('/error.jpg', (req, res) => {
 });
 
 app.get('/' || '/home', (req, res) => {
-    res.show('index.html');
+    res.render('index');
 });
 
 app.get('/about', (req, res) => {
-    res.show('about.html');
+    res.render('about', {layout: 'dark'});
+});
+
+app.get('/contact', (req, res) => {
+    res.render('contact');
+});
+
+app.get('/info', (req, res) => {
+    res.render('info');
+});
+
+app.get('/history', (req, res) => {
+    res.render('history');
+});
+
+app.get('/hello/:name', (req, res) => {
+    res.send(`Hello ${req.params.name}`);
+});
+
+app.get('/hello/:name', (req, res) => {
+    res.render('hello', { name: req.params.name});
 });
 
 app.use((req, res) => {
